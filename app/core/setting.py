@@ -1,5 +1,5 @@
 from pydantic import ConfigDict, field_validator
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class EnvSettings(BaseSettings):
@@ -17,15 +17,15 @@ class EnvSettings(BaseSettings):
 class GlobalSettings(BaseSettings):
     ENV_STATE: str = "dev"
 
-    model_config = ConfigDict(env_file="env/base.env")
+    model_config = SettingsConfigDict(env_file="env/base.env")
 
 
 class DevSettings(EnvSettings):
-    model_config = ConfigDict(env_file="env/dev.env")
+    model_config = SettingsConfigDict(env_file="env/dev.env")
 
 
 class ProdSettings(EnvSettings):
-    model_config = ConfigDict(env_file="env/prod.env")
+    model_config = SettingsConfigDict(env_file="env/prod.env")
 
 
 class FactorySettings:
