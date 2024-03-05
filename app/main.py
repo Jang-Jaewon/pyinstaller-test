@@ -1,13 +1,7 @@
-import sys
-from pathlib import Path
-
-app_dir = Path(__file__).parent
-sys.path.insert(0, str(app_dir))
-
 from contextlib import asynccontextmanager
 
 import uvicorn
-from core.config import APP_ENV, DEBUG, ALLOWED_ORIGINS
+from app.core.config import APP_ENV, DEBUG, ALLOWED_ORIGINS
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
