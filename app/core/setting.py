@@ -1,20 +1,20 @@
 import os
-from dotenv import load_dotenv
 import sys
 
+from dotenv import load_dotenv
 
-if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-    env_path = os.path.join(sys._MEIPASS, 'env')
+if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+    env_path = os.path.join(sys._MEIPASS, "env")
 else:
-    env_path = os.path.join(os.path.dirname(__file__), '..', '..')
+    env_path = os.path.join(os.path.dirname(__file__), "..", "..")
 
-env_path = os.path.join(env_path, '.env')
+env_path = os.path.join(env_path, ".env")
 load_dotenv(env_path)
 
 
 APP_ENV = os.environ.get("APP_ENV")
 DEBUG = bool(os.environ.get("DEBUG"))
-ALLOWED_ORIGINS = os.environ.get("ALLOWED_ORIGINS").split(',')
+ALLOWED_ORIGINS = os.environ.get("ALLOWED_ORIGINS").split(",")
 
 # from pydantic import field_validator
 # from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -57,5 +57,3 @@ ALLOWED_ORIGINS = os.environ.get("ALLOWED_ORIGINS").split(',')
 #
 #
 # settings = FactorySettings.load()
-
-
