@@ -412,3 +412,5 @@ zsdoc/data
 
 temp/*
 letsencrypt/
+
+app/core/config.py
