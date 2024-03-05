@@ -1,23 +1,26 @@
+import sys
+from pathlib import Path
+
+root_path = Path(__file__).resolve().parent.parent
+sys.path.append(str(root_path))
+
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.core.metadata import swagger_metadata
 from app.core.setting import settings
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print(f"INFO:     Hello, Run the server in the {settings.APP_ENV} environment 👋")
+    print(f"INFO:     Hello, Run in the {settings.APP_ENV} environment 👋")
     yield
-    print(
-        f"INFO:     Bye, Shut down the server in the {settings.APP_ENV} environment 👋"
-    )
+    print(f"INFO:     Bye, Shut down in the {settings.APP_ENV} environment 👋")
 
 
-app = FastAPI(**swagger_metadata, lifespan=lifespan)
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,7 +34,7 @@ app.add_middleware(
 @app.get("/api-health-check")
 def api_health_check():
     return {
-        "api_health_check": "api-server-template is Ok",
+        "api_health_check": "api-server is Ok",
         "debug-mode": settings.DEBUG,
     }
 
@@ -42,4 +45,4 @@ def read_item(item_id: int, q: str | None = None):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
