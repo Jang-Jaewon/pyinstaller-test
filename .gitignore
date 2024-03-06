@@ -443,4 +443,3 @@ letsencrypt/
 
 app/core/config.py
 *.db
-*/test
