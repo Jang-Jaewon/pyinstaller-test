@@ -1,21 +1,13 @@
-import re
 import psutil
 import pythoncom
 import win32api
-import win32net
-import win32com.client
-import win32netcon
 import socket
-import nmap
-import ctypes
-from ctypes import wintypes
-import asyncio
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from ipaddress import ip_network
 import wmi
 import subprocess
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
 from app.api.schema.base import RouterTags
 
@@ -90,7 +82,6 @@ def win_api_enable_network_discovery():
 
 
 def check_host(ip_str):
-    """핑 요청을 보내고 응답이 있는 경우 호스트 이름을 조회하며, 결과를 반환합니다."""
     try:
         subprocess.check_output(["ping", "-n", "1", "-w", "100", ip_str], stderr=subprocess.DEVNULL)
         try:
@@ -103,7 +94,6 @@ def check_host(ip_str):
 
 
 def get_local_devices(network_cidr):
-    """네트워크 상의 장치를 병렬로 조회합니다."""
     network = ip_network(network_cidr)
     local_devices = []
 
@@ -120,7 +110,7 @@ def get_local_devices(network_cidr):
 @router.get("/network/local-computer")
 def win_api_enable_network_local_computer():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(('10.255.255.255', 1))
+    s.connect(("10.255.255.255", 1))
     local_ip = s.getsockname()[0]
     network_cidr = local_ip.rsplit(".", 1)[0] + ".0/24"
     local_devices = get_local_devices(network_cidr)
