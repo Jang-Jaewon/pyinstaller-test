@@ -21,7 +21,7 @@ def get_local_system():
 def get_private_network_pc():
     network_cidr = win_api.get_network_cidr()
     network = ip_network(network_cidr)
-    private_network = []
+    network_scan_result = []
 
     with ThreadPoolExecutor() as executor:
         futures = [
@@ -31,9 +31,9 @@ def get_private_network_pc():
         for future in as_completed(futures):
             result = future.result()
             if result:
-                private_network.append(result)
+                network_scan_result.append(result)
 
-    return {"private_network_scan": private_network}
+    return {"network_scan_result": network_scan_result}
 
 
 def apply_network_enable_discovery():
