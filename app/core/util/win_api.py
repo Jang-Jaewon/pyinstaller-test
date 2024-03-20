@@ -20,27 +20,17 @@ def get_process_info():
 
 def get_device_info():
     pythoncom.CoInitialize()
-    device_data = []
+    device_info = []
     for device in wmi.WMI().Win32_PnPEntity(ConfigManagerErrorCode=0):
-        device_data.append(
+        device_info.append(
             {
-                "DeviceID": device.DeviceID,
-                "Name": device.Name,
-                "Description": device.Description,
-                "Status": device.Status,
+                "device_id": device.DeviceID,
+                "name": device.Name,
+                "status": device.Status,
             }
         )
     pythoncom.CoInitialize()
 
-    device_info = [
-        {
-            "device_id": device["DeviceID"],
-            "name": device["Name"],
-            "desc": device["Description"],
-            "status": device["Status"],
-        }
-        for device in device_data
-    ]
     return device_info
 
 
@@ -63,4 +53,4 @@ def check_network_host(ip_str):
             hostname = "Unknown"
     except subprocess.CalledProcessError:
         return None
-    return ip_str, hostname
+    return {"ip": ip_str, "hostname": hostname}

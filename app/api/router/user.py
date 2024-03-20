@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from app.api.schema import user as user_schema
+from app.api.schema.req import user as user_schema
 from app.api.schema.base import RouterTags
 from app.api.service import user as user_service
 from app.core.dependency import get_db
