@@ -1,7 +1,8 @@
 import os
+
+from dotenv import load_dotenv
 from pydantic import field_validator
 from pydantic_settings import BaseSettings
-from dotenv import load_dotenv
 
 
 class GlobalSettings(BaseSettings):
@@ -12,6 +13,7 @@ class EnvSettings(BaseSettings):
     APP_ENV: str
     DEBUG: bool
     ALLOWED_ORIGINS: str
+    DB_URL: str
 
     @field_validator("ALLOWED_ORIGINS")
     def parsing_allowed_origins(cls, value: str):
@@ -33,7 +35,7 @@ class FactorySettings:
     def load():
         try:
             local_env_path = os.path.join(os.path.dirname(__file__), "..", "..", "env")
-            load_dotenv(os.path.join(local_env_path, 'base.env'))
+            load_dotenv(os.path.join(local_env_path, "base.env"))
         except FileNotFoundError:
             raise Exception("Environment path not found.")
 
