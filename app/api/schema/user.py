@@ -29,7 +29,7 @@ class UserCreateRequestSchema(UserBase):
 class UserResponseSchema(UserBase):
     id: int
     is_active: bool
-    items: list[Item] = []
+    items: list[ItemResponseSchema] = []
 
     class Config:
         from_attributes = True

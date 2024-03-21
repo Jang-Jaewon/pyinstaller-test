@@ -5,7 +5,7 @@ from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.router import user, win
-from app.core.config import ALLOWED_ORIGINS, APP_ENV, DEBUG
+from app.core.config import settings
 from app.core.database import Base, engine
 from app.core.middleware import ProcessTimeMiddleware
 
@@ -14,16 +14,16 @@ Base.metadata.create_all(bind=engine)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print(f"INFO:     Hello, Run in the {APP_ENV} environment 👋")
+    print(f"INFO:     Hello, Run in the {settings.APP_ENV} environment 👋")
     yield
-    print(f"INFO:     Bye, Shut down in the {APP_ENV} environment 👋")
+    print(f"INFO:     Bye, Shut down in the {settings.APP_ENV} environment 👋")
 
 
 app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
+    allow_origins=settings.ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,9 +41,9 @@ app.include_router(api_router)
 def api_health_check():
     return {
         "api_health_check": "api-server is Ok",
-        "APP_ENV": APP_ENV,
-        "DEBUG": DEBUG,
-        "ALLOWED_ORIGINS": ALLOWED_ORIGINS,
+        "APP_ENV": settings.APP_ENV,
+        "DEBUG": settings.DEBUG,
+        "ALLOWED_ORIGINS": settings.ALLOWED_ORIGINS,
     }
 
 
