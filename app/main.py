@@ -5,9 +5,9 @@ from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.router import user, win
-from app.core.middleware import ProcessTimeMiddleware
 from app.core.config import ALLOWED_ORIGINS, APP_ENV, DEBUG
 from app.core.database import Base, engine
+from app.core.middleware import ProcessTimeMiddleware
 
 Base.metadata.create_all(bind=engine)
 

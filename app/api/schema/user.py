@@ -6,11 +6,11 @@ class ItemBase(BaseModel):
     description: str | None = None
 
 
-class ItemCreate(ItemBase):
+class ItemCreateRequestSchema(ItemBase):
     pass
 
 
-class Item(ItemBase):
+class ItemResponseSchema(ItemBase):
     id: int
     owner_id: int
 
@@ -22,11 +22,11 @@ class UserBase(BaseModel):
     email: str
 
 
-class UserCreate(UserBase):
+class UserCreateRequestSchema(UserBase):
     password: str
 
 
-class User(UserBase):
+class UserResponseSchema(UserBase):
     id: int
     is_active: bool
     items: list[Item] = []
