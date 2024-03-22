@@ -14,6 +14,6 @@ Base = declarative_base()
 
 
 def create_schema():
-    from app.api.models import User, Item, Network
+    from app.api.models import item, user, win
     Base.metadata.create_all(bind=engine)
     print("database create done.")
