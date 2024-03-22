@@ -4,7 +4,6 @@ from sqlalchemy.orm import sessionmaker
 
 from app.core.config import settings
 
-
 SQLALCHEMY_DATABASE_URL = settings.DB_URL
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
@@ -15,5 +14,6 @@ Base = declarative_base()
 
 def create_schema():
     from app.api.models import item, user, win
+
     Base.metadata.create_all(bind=engine)
-    print("database create done.")
+    print(f"INFO:     DATABASE create schemas done. 👏")

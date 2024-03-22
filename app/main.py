@@ -2,19 +2,17 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
-from app.core.config import settings
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.core.middleware import ProcessTimeMiddleware
-from app.core.database import create_schema
 from app.api.router import api_router
-
-
-create_schema()
+from app.core.config import settings
+from app.core.database import create_schema
+from app.core.middleware import ProcessTimeMiddleware
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    create_schema()
     print(f"INFO:     Hello, Run in the {settings.APP_ENV} environment 👋")
     yield
     print(f"INFO:     Bye, Shut down in the {settings.APP_ENV} environment 👋")
