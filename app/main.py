@@ -1,15 +1,16 @@
 from contextlib import asynccontextmanager
 
 import uvicorn
-from fastapi import APIRouter, FastAPI
+from fastapi import FastAPI
+from app.core.config import settings
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.router import user, win
-from app.core.config import settings
-from app.core.database import Base, engine
 from app.core.middleware import ProcessTimeMiddleware
+from app.core.database import create_schema
+from app.api.router import api_router
 
-Base.metadata.create_all(bind=engine)
+
+create_schema()
 
 
 @asynccontextmanager
@@ -30,20 +31,13 @@ app.add_middleware(
 )
 app.add_middleware(ProcessTimeMiddleware)
 
-
-api_router = APIRouter(prefix="/api")
-api_router.include_router(user.router)
-api_router.include_router(win.router)
 app.include_router(api_router)
 
 
 @app.get("/api/health-check")
 def api_health_check():
     return {
-        "api_health_check": "api-server is Ok",
-        "APP_ENV": settings.APP_ENV,
-        "DEBUG": settings.DEBUG,
-        "ALLOWED_ORIGINS": settings.ALLOWED_ORIGINS,
+        "api_server_status": f"{settings.APP_ENV} api-server is Ok",
     }
 
 

@@ -2,9 +2,10 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
+from app.api.models.base import Timestamp
 
 
-class Item(Base):
+class Item(Base, Timestamp):
     __tablename__ = "items"
 
     id = Column(Integer, primary_key=True)
