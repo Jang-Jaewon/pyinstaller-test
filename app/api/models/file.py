@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String
-from app.core.database import Base
+
 from app.api.models.base import Timestamp
+from app.core.database import Base
 
 
 class File(Base, Timestamp):

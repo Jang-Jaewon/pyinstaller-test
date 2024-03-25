@@ -1,5 +1,6 @@
-from pydantic import BaseModel, Field
 from datetime import datetime
+
+from pydantic import BaseModel, Field
 
 
 class FileBase(BaseModel):
@@ -12,7 +13,9 @@ class FileResponseSchema(FileBase):
     created_by: str = Field(title="생성 위치", description="생성 위치")
     created_at: datetime = Field(title="생성 일시", description="생성 일시")
     updated_at: datetime = Field(title="수정 일시", description="수정 일시")
-    deleted_at: datetime | None = Field(None, title="삭제 일시", description="삭제 일시")
+    deleted_at: datetime | None = Field(
+        None, title="삭제 일시", description="삭제 일시"
+    )
 
     class Config:
         from_attributes = True

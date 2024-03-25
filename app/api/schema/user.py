@@ -1,9 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, Field
 
 
 class ItemBase(BaseModel):
-    title: str
-    description: str | None = None
+    title: str = Field(title="제목", description="제목")
+    description: str | None = Field(None, title="설명", description="설명")
 
 
 class ItemCreateRequestSchema(ItemBase):
@@ -11,24 +11,24 @@ class ItemCreateRequestSchema(ItemBase):
 
 
 class ItemResponseSchema(ItemBase):
-    id: int
-    owner_id: int
+    id: int = Field(title="ID", description="ID")
+    owner_id: int = Field(title="소유자", description="소유자")
 
     class Config:
         from_attributes = True
 
 
 class UserBase(BaseModel):
-    email: str
+    email: EmailStr = Field(title="이메일", description="이메일")
 
 
 class UserCreateRequestSchema(UserBase):
-    password: str
+    password: str = Field(title="비밀번호", description="비밀번호")
 
 
 class UserResponseSchema(UserBase):
-    id: int
-    is_active: bool
+    id: int = Field(title="ID", description="ID")
+    is_active: bool = Field(title="회원 상태", description="회원 상태")
     items: list[ItemResponseSchema] = []
 
     class Config:
