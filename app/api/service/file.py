@@ -3,13 +3,13 @@ import os
 from fastapi import UploadFile
 from sqlalchemy.orm import Session
 
-from app.api.crud.image import create_image
+from app.api.crud.image import create_file
 
 
 FILE_DIR = os.path.join(os.path.dirname(__file__), "..", "images")
 
 
-def save_image_on_disk(file: UploadFile, client_info: dict, db: Session):
+def save_file_on_disk(file: UploadFile, client_info: dict, db: Session):
     print(client_info)
     host_name = client_info.get("host_name")
     if not os.path.exists(FILE_DIR):
@@ -18,4 +18,4 @@ def save_image_on_disk(file: UploadFile, client_info: dict, db: Session):
 
     with open(file_location, "wb+") as file_object:
         file_object.write(file.file.read())
-    return create_image(file_location, host_name, db)
+    return create_file(file_location, host_name, db)
