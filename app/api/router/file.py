@@ -35,3 +35,12 @@ def get_files(
     db: Session = Depends(get_db),
 ):
     return file_service.get_files(pagination, db)
+
+
+@router.get(
+    "/{file_id}",
+    status_code=200,
+    summary="이미지 파일 상세 조회 및 전송"
+)
+def get_file(file_id: int, db: Session = Depends(get_db)):
+    return file_service.get_file(file_id, db)

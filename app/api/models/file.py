@@ -9,4 +9,5 @@ class File(Base, Timestamp):
 
     id = Column(Integer, primary_key=True, index=True, comment="ID")
     image_path = Column(String, comment="파일 경로")
+    image_name = Column(String, comment="파일 이름")
     created_by = Column(String, comment="생성 위치")
