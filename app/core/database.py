@@ -13,7 +13,7 @@ Base = declarative_base()
 
 
 def create_schema():
-    from app.api.models import item, user, win
+    from app.api.models import item, user, win, file
 
     Base.metadata.create_all(bind=engine)
     print(f"INFO:     DATABASE create schemas done. 👏")

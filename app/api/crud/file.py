@@ -9,3 +9,10 @@ def create_file(file_path: str, host_name: str, db: Session):
     db.commit()
     db.refresh(file_obj)
     return file_obj
+
+
+def get_files(cursor_id: int, page_size: int, db: Session):
+    query = db.query(File).filter(File.deleted_at == None)
+    if cursor_id:
+        query = query.filter(File.id > cursor_id)
+    return query.order_by(File.id).limit(page_size).all()
