@@ -8,15 +8,14 @@ from app.api.crud import file as file_crud
 from app.api.schema.file import FileResponseSchema
 
 
-FILE_DIR = os.path.join(os.path.dirname(__file__), "..", "images")
-
-
 def save_file_on_disk(file: UploadFile, client_info: dict, db: Session):
     host_name = client_info.get("host_name")
-    if not os.path.exists(FILE_DIR):
-        os.makedirs(FILE_DIR)
-    file_path = os.path.join(FILE_DIR, host_name)
     file_name = file.filename
+    file_dir = os.path.join(os.path.dirname(__file__), "..", "images", host_name)
+
+    if not os.path.exists(file_dir):
+        os.makedirs(file_dir)
+    file_path = os.path.join(file_dir, file_name)
 
     with open(file_path, "wb+") as file_object:
         file_object.write(file.file.read())

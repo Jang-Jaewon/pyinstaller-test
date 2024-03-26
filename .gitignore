@@ -442,3 +442,4 @@ temp/*
 letsencrypt/
 
 *.db
+app/api/images
